@@ -53,9 +53,8 @@ python tools/count_tokens.py \
 
 # 4. Score in results.json (correctness, code_quality, edge_cases, cost_usd, time_min, notes)
 
-# 5. Generate chart and report
-python chart.py
-python tools/render_report.py
+# 5. Generate chart and report (one shot — validates results.json, then runs chart + renderer)
+python tools/build_report.py
 ```
 
 ## File layout
@@ -75,6 +74,7 @@ claude-vs-codex-benchmark/
   tools/
     count_tokens.py    # tokenize + price
     render_report.py   # RESULTS.md + RESULTS.html
+    build_report.py    # validate + chart + render in one command
     sample_results.json # for testing chart and renderer
 ```
 
