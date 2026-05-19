@@ -1,0 +1,15 @@
+{
+  "meta": {
+    "date": "2026-05-19",
+    "claude_model": "claude-opus-4-7",
+    "codex_model": "gpt-5.5",
+    "runs_per_task": 1,
+    "runner": "@ZigaSetar",
+    "rubric": {
+      "correctness_weight": 0.6,
+      "code_quality_weight": 0.25,
+      "edge_cases_weight": 0.15
+    }
+  },
+  "tasks": []
+}

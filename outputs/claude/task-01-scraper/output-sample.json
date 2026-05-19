@@ -1,0 +1,302 @@
+[
+  {
+    "rank": 1,
+    "title": "OpenBSD 7.9 Released",
+    "url": "https://www.openbsd.org/79.html",
+    "is_ask_hn": false,
+    "points": 97,
+    "author": "bradley_taunt",
+    "comments_count": 28,
+    "age": "2026-05-19T13:11:51"
+  },
+  {
+    "rank": 2,
+    "title": "New accessibility features powered by Apple Intelligence",
+    "url": "https://www.apple.com/newsroom/2026/05/apple-unveils-new-accessibility-features-and-updates-with-apple-intelligence/",
+    "is_ask_hn": false,
+    "points": 197,
+    "author": "interpol_p",
+    "comments_count": 80,
+    "age": "2026-05-19T12:04:18"
+  },
+  {
+    "rank": 3,
+    "title": "Gaussian Splat of a Strawberry",
+    "url": "https://superspl.at/scene/84df8849",
+    "is_ask_hn": false,
+    "points": 239,
+    "author": "danybittel",
+    "comments_count": 95,
+    "age": "2026-05-19T10:38:47"
+  },
+  {
+    "rank": 4,
+    "title": "Show HN: I made a 3D pose maker for artists",
+    "url": "https://setpose.com/",
+    "is_ask_hn": false,
+    "points": 12,
+    "author": "augustvdv",
+    "comments_count": 2,
+    "age": "2026-05-19T14:04:19"
+  },
+  {
+    "rank": 5,
+    "title": "I Found Ultra-Pure Quantum Crystals in an Abandoned Mine in the Atacama Desert",
+    "url": "https://medium.com/@breid.at/ultra-pure-quantum-crystals-from-an-abandoned-mine-in-a-mysterious-desert-93cc87d12314",
+    "is_ask_hn": false,
+    "points": 155,
+    "author": "vi_sextus_vi",
+    "comments_count": 40,
+    "age": "2026-05-17T03:25:23"
+  },
+  {
+    "rank": 6,
+    "title": "Hanoi's humble beer glass and the memory of a nation",
+    "url": "https://sundaylongread.com/2026/05/15/hanois-humble-beer-glass-and-the-memory-of-a-nation/",
+    "is_ask_hn": false,
+    "points": 11,
+    "author": "NaOH",
+    "comments_count": 0,
+    "age": "2026-05-18T17:45:02"
+  },
+  {
+    "rank": 7,
+    "title": "Nim-Presto – REST API Framework for Nim Language",
+    "url": "https://github.com/status-im/nim-presto",
+    "is_ask_hn": false,
+    "points": 30,
+    "author": "TheWiggles",
+    "comments_count": 3,
+    "age": "2026-05-17T13:09:20"
+  },
+  {
+    "rank": 8,
+    "title": "Polypad",
+    "url": "https://polypad.amplify.com/",
+    "is_ask_hn": false,
+    "points": 144,
+    "author": "ivank",
+    "comments_count": 13,
+    "age": "2026-05-17T07:20:14"
+  },
+  {
+    "rank": 9,
+    "title": "An Apple (II) for Teacher",
+    "url": "https://technicshistory.com/2026/05/19/an-apple-ii-for-teacher/",
+    "is_ask_hn": false,
+    "points": 13,
+    "author": "cfmcdonald",
+    "comments_count": 1,
+    "age": "2026-05-19T00:25:50"
+  },
+  {
+    "rank": 10,
+    "title": "Mini Shai-Hulud Strikes Again: 314 npm Packages Compromised",
+    "url": "https://safedep.io/mini-shai-hulud-strikes-again-314-npm-packages-compromised/",
+    "is_ask_hn": false,
+    "points": 208,
+    "author": "theanonymousone",
+    "comments_count": 126,
+    "age": "2026-05-19T05:04:49"
+  },
+  {
+    "rank": 11,
+    "title": "Photo GIMP – A Patch for GIMP 3 for Photoshop Users",
+    "url": "https://github.com/Diolinux/PhotoGIMP",
+    "is_ask_hn": false,
+    "points": 120,
+    "author": "SockThief",
+    "comments_count": 86,
+    "age": "2026-05-17T11:18:44"
+  },
+  {
+    "rank": 12,
+    "title": "Peter Neumann has died",
+    "url": "https://www.tuhs.org/pipermail/tuhs/2026-May/033748.html",
+    "is_ask_hn": false,
+    "points": 221,
+    "author": "pabs3",
+    "comments_count": 19,
+    "age": "2026-05-19T03:17:45"
+  },
+  {
+    "rank": 13,
+    "title": "Colonization of Venus",
+    "url": "https://en.wikipedia.org/wiki/Colonization_of_Venus",
+    "is_ask_hn": false,
+    "points": 50,
+    "author": "simonebrunozzi",
+    "comments_count": 23,
+    "age": "2026-05-19T12:26:45"
+  },
+  {
+    "rank": 14,
+    "title": "Click (2016)",
+    "url": "https://clickclickclick.click/",
+    "is_ask_hn": false,
+    "points": 336,
+    "author": "andrewzeno",
+    "comments_count": 84,
+    "age": "2026-05-18T23:03:02"
+  },
+  {
+    "rank": 15,
+    "title": "Kv4p HT – A homebrew 1W radio (VHF or UHF) that plugs into an Android phone",
+    "url": "https://www.kv4p.com/",
+    "is_ask_hn": false,
+    "points": 121,
+    "author": "krupan",
+    "comments_count": 46,
+    "age": "2026-05-16T16:49:15"
+  },
+  {
+    "rank": 16,
+    "title": "Cursor Introduces Composer 2.5",
+    "url": "https://cursor.com/blog/composer-2-5",
+    "is_ask_hn": false,
+    "points": 208,
+    "author": "asar",
+    "comments_count": 160,
+    "age": "2026-05-18T17:20:43"
+  },
+  {
+    "rank": 17,
+    "title": "Anthropic acquires Stainless",
+    "url": "https://www.anthropic.com/news/anthropic-acquires-stainless",
+    "is_ask_hn": false,
+    "points": 490,
+    "author": "tomeraberbach",
+    "comments_count": 350,
+    "age": "2026-05-18T17:01:21"
+  },
+  {
+    "rank": 18,
+    "title": "Intro to TLA+ for the LLM Era: Prompt Your Way to Victory",
+    "url": "https://emptysqua.re/blog/intro-to-tla-plus-for-the-llm-era/",
+    "is_ask_hn": false,
+    "points": 3,
+    "author": "zdw",
+    "comments_count": 0,
+    "age": "2026-05-17T15:52:21"
+  },
+  {
+    "rank": 19,
+    "title": "The lasting influence of Netscape Time",
+    "url": "https://thehistoryoftheweb.com/the-lasting-influence-of-netscape-time/",
+    "is_ask_hn": false,
+    "points": 71,
+    "author": "zdw",
+    "comments_count": 14,
+    "age": "2026-05-17T01:22:57"
+  },
+  {
+    "rank": 20,
+    "title": "Energy return in running shoes explained (2025)",
+    "url": "https://runrepeat.com/guides/energy-return-in-running-shoes",
+    "is_ask_hn": false,
+    "points": 39,
+    "author": "jstrieb",
+    "comments_count": 38,
+    "age": "2026-05-17T19:12:15"
+  },
+  {
+    "rank": 21,
+    "title": "PyTorch Landscape",
+    "url": "https://pytorch.landscape2.io",
+    "is_ask_hn": false,
+    "points": 64,
+    "author": "salamo",
+    "comments_count": 17,
+    "age": "2026-05-19T04:29:39"
+  },
+  {
+    "rank": 22,
+    "title": "1024000^2 Blocks, 2B2T Minecraft Server World Download Project, and Discoveries",
+    "url": "https://github.com/2b2tplace/1m_release",
+    "is_ask_hn": false,
+    "points": 162,
+    "author": "exploraz",
+    "comments_count": 101,
+    "age": "2026-05-18T14:13:07"
+  },
+  {
+    "rank": 23,
+    "title": "The last six months in LLMs in five minutes",
+    "url": "https://simonwillison.net/2026/May/19/5-minute-llms/",
+    "is_ask_hn": false,
+    "points": 567,
+    "author": "yakkomajuri",
+    "comments_count": 465,
+    "age": "2026-05-19T01:30:42"
+  },
+  {
+    "rank": 24,
+    "title": "We let AIs run radio stations",
+    "url": "https://andonlabs.com/blog/andon-fm",
+    "is_ask_hn": false,
+    "points": 311,
+    "author": "lukaspetersson",
+    "comments_count": 231,
+    "age": "2026-05-18T18:12:18"
+  },
+  {
+    "rank": 25,
+    "title": "Regex Chess: A 2-ply minimax chess engine in 84,688 regular expressions",
+    "url": "https://nicholas.carlini.com/writing/2025/regex-chess.html",
+    "is_ask_hn": false,
+    "points": 157,
+    "author": "surprisetalk",
+    "comments_count": 40,
+    "age": "2026-05-14T15:30:36"
+  },
+  {
+    "rank": 26,
+    "title": "CISA Admin Leaked AWS GovCloud Keys on GitHub",
+    "url": "https://krebsonsecurity.com/2026/05/cisa-admin-leaked-aws-govcloud-keys-on-github/",
+    "is_ask_hn": false,
+    "points": 35,
+    "author": "LelouBil",
+    "comments_count": 0,
+    "age": "2026-05-19T07:45:53"
+  },
+  {
+    "rank": 27,
+    "title": "Anthropic Is Preparing for IPO and We Should Be Worried",
+    "url": "https://www.vincentschmalbach.com/anthropic-ipo-developers-should-be-worried-v2/",
+    "is_ask_hn": false,
+    "points": 45,
+    "author": "vincent_s",
+    "comments_count": 42,
+    "age": "2026-05-19T13:30:58"
+  },
+  {
+    "rank": 28,
+    "title": "Show HN: Number Gacha, a gacha game distilled to its essence",
+    "url": "https://isabisabel.com/gacha/",
+    "is_ask_hn": false,
+    "points": 198,
+    "author": "babel16",
+    "comments_count": 96,
+    "age": "2026-05-13T15:39:41"
+  },
+  {
+    "rank": 29,
+    "title": "Make ZIP files smaller with ZIP Shrinker",
+    "url": "https://evanhahn.com/make-zip-files-smaller-with-zip-shrinker/",
+    "is_ask_hn": false,
+    "points": 53,
+    "author": "zdw",
+    "comments_count": 36,
+    "age": "2026-05-17T00:26:04"
+  },
+  {
+    "rank": 30,
+    "title": "Hyperpolyglot Lisp: Common Lisp, Racket, Clojure, Emacs Lisp",
+    "url": "https://hyperpolyglot.org/lisp",
+    "is_ask_hn": false,
+    "points": 172,
+    "author": "veqq",
+    "comments_count": 42,
+    "age": "2026-05-18T19:27:25"
+  }
+]

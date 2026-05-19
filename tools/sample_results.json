@@ -1,0 +1,17 @@
+{
+  "meta": {
+    "date": "2026-05-19",
+    "claude_model": "claude-opus-4-7",
+    "codex_model": "gpt-5.5",
+    "runs_per_task": 1,
+    "runner": "@ZigaSetar",
+    "note": "Synthetic data for chart.py rendering tests only. Do not interpret."
+  },
+  "tasks": [
+    {"id": 1, "name": "Build scraper",     "claude": {"correctness": 7, "code_quality": 8, "edge_cases": 8, "cost_usd": 0.95, "time_min": 6, "notes": ""}, "codex": {"correctness": 9, "code_quality": 9, "edge_cases": 9, "cost_usd": 0.52, "time_min": 4, "notes": ""}},
+    {"id": 2, "name": "Debug flaky test",  "claude": {"correctness": 9, "code_quality": 9, "edge_cases": 10,"cost_usd": 0.35, "time_min": 3, "notes": ""}, "codex": {"correctness": 8, "code_quality": 7, "edge_cases": 8, "cost_usd": 0.21, "time_min": 2, "notes": ""}},
+    {"id": 3, "name": "Write MCP server",  "claude": {"correctness": 9, "code_quality": 9, "edge_cases": 9, "cost_usd": 1.20, "time_min": 9, "notes": ""}, "codex": {"correctness": 7, "code_quality": 7, "edge_cases": 8, "cost_usd": 0.71, "time_min": 6, "notes": ""}},
+    {"id": 4, "name": "Refactor TS module","claude": {"correctness": 9, "code_quality": 10,"edge_cases": 8, "cost_usd": 1.40, "time_min": 8, "notes": ""}, "codex": {"correctness": 8, "code_quality": 8, "edge_cases": 8, "cost_usd": 0.78, "time_min": 5, "notes": ""}},
+    {"id": 5, "name": "E2E agent",         "claude": {"correctness": 8, "code_quality": 8, "edge_cases": 7, "cost_usd": 1.85, "time_min": 11,"notes": ""}, "codex": {"correctness": 9, "code_quality": 9, "edge_cases": 9, "cost_usd": 1.04, "time_min": 8, "notes": ""}}
+  ]
+}

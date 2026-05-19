@@ -1,0 +1,15 @@
+{
+  "name": "claude",
+  "version": "1.0.0",
+  "main": "task-01-scraper.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "playwright": "^1.60.0"
+  }
+}
