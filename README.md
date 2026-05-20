@@ -4,17 +4,21 @@
 
 ![Chart](chart.png)
 
+## The surprise
+
+**Codex narrowly beat Claude Opus 4.7 at writing an MCP server — on Anthropic's own protocol.** That was Codex's only win in the benchmark, but it's the one I didn't see coming. The numbers and the side-by-side code are in [`outputs/claude/task-03-mcp/`](outputs/claude/task-03-mcp/) and [`outputs/codex/task-03-mcp/`](outputs/codex/task-03-mcp/) — judge for yourself. Both servers pass the stdio handshake and `tools/list`; Codex's edge is in type definitions and three-way error categorization (network / HTTP / JSON parse) in the fetch helper.
+
 ## TL;DR
 
 | | Claude Opus 4.7 | Codex (GPT-5.5) |
 |---|:---:|:---:|
 | Quality wins | **4 / 5** | 1 / 5 |
 | Total spend | $0.30 | **$0.08** |
-| Tasks won | scraper · debug · refactor · e2e agent | mcp server |
+| Tasks won | scraper · debug · refactor · e2e agent | **mcp server** |
 
 Claude won 4 of 5 on quality; Codex was 73% cheaper. The repo is the proof — every file each model wrote is in [`outputs/`](outputs/), every score has written justification in [RESULTS.md](RESULTS.md), every smoke test is reproducible.
 
-The most striking single finding: **Codex hallucinated a Playwright matcher** on the debug task — `toHaveCountGreaterThan(0)`, which does not exist in the library. The fix would throw at runtime. See [`outputs/codex/task-02-debug/fixed-test.ts`](outputs/codex/task-02-debug/fixed-test.ts) and the side-by-side with Claude's working fix.
+The most embarrassing single finding (for Codex): **it hallucinated a Playwright matcher** on the debug task — `toHaveCountGreaterThan(0)`, which does not exist in the library. The fix would throw at runtime. See [`outputs/codex/task-02-debug/fixed-test.ts`](outputs/codex/task-02-debug/fixed-test.ts) and the side-by-side with Claude's working fix.
 
 ## The 5 tasks
 
