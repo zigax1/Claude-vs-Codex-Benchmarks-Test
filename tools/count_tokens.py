@@ -31,11 +31,22 @@ import urllib.request
 import urllib.error
 from pathlib import Path
 
-# USD per million tokens. Update at publish time and record sources in RESULTS.md.
+# USD per million tokens. Verified at run time; sources documented in RESULTS.md.
+#   claude-opus-4-7  — https://platform.claude.com/docs/en/about-claude/pricing
+#   gpt-5.5          — TODO: verify against https://openai.com/api/pricing
+#                       (fetch blocked at run time; placeholder is GPT-5 family rate)
 PRICING: dict[str, dict[str, float]] = {
-    "claude-opus-4-7": {"input_per_mtok": 15.00, "output_per_mtok": 75.00},
+    "claude-opus-4-7": {"input_per_mtok": 5.00,  "output_per_mtok": 25.00},
     "gpt-5.5":         {"input_per_mtok": 1.25,  "output_per_mtok": 10.00},
 }
+
+# Tokenizer fidelity correction. Per Anthropic docs (May 2026):
+#   "Opus 4.7 uses a new tokenizer ... may use up to 35% more tokens for the
+#    same fixed text" relative to prior tokenizers.
+# Our offline proxy is OpenAI's o200k_base, which is closer to the older Claude
+# tokenizer. To approximate Opus 4.7's actual count we multiply by this factor.
+# Exact counts come from the Anthropic count_tokens API (--use-anthropic-api).
+CLAUDE_TOKEN_CORRECTION = 1.35
 
 
 def get_encoder():
@@ -78,7 +89,10 @@ def count_claude_api(text: str, model_id: str) -> int:
 def count_tokens(text: str, model: str, use_anthropic_api: bool, anthropic_model_id: str) -> int:
     if model.startswith("claude") and use_anthropic_api:
         return count_claude_api(text, anthropic_model_id)
-    return count_local(text)
+    raw = count_local(text)
+    if model.startswith("claude"):
+        return round(raw * CLAUDE_TOKEN_CORRECTION)
+    return raw
 
 
 def cost(input_tokens: int, output_tokens: int, model: str) -> float:
