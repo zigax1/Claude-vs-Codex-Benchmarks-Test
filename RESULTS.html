@@ -82,9 +82,78 @@
 <div class="wrap">
 <header>
   <h1>claude-opus-4-7 vs gpt-5.5</h1>
-  <div class="sub">0 tasks · 1 run(s) each · same prompts · 2026-05-19 · @ZigaSetar</div>
+  <div class="sub">5 tasks · 1 run(s) each · same prompts · 2026-05-19 · @ZigaSetar</div>
 </header>
-<div class="empty">No tasks scored yet. Once Codex outputs are in and graded, <code>results.json</code> will populate and this page will render.</div>
+<div class="chart"><img src="chart.png" alt="Quality and cost comparison"></div>
+<div class="headline">
+      <div class="stat">
+        <div class="label">Quality wins</div>
+        <div class="value"><span class="claude">4</span> &nbsp;·&nbsp; <span class="codex">1</span></div>
+        <div class="sub">Claude · Codex</div>
+      </div>
+      <div class="stat">
+        <div class="label">Total cost</div>
+        <div class="value"><span class="claude">$0.30</span> &nbsp;·&nbsp; <span class="codex">$0.08</span></div>
+        <div class="sub">Codex was <b>73% cheaper</b></div>
+      </div>
+    </div>
+<h2>Per-task scores</h2>
+<table><thead><tr><th class="num">#</th><th>Task</th><th class="num">Claude</th><th class="num">Codex</th><th class="num">Claude cost</th><th class="num">Codex cost</th><th>Winner</th></tr></thead><tbody>
+<tr><td class="num">1</td><td>Build HN scraper</td><td class="num">8.75</td><td class="num">8.60</td><td class="num">$0.04</td><td class="num">$0.0057</td><td><span class="badge claude">Claude</span></td></tr>
+<tr><td class="num">2</td><td>Debug flaky test</td><td class="num">9.60</td><td class="num">5.05</td><td class="num">$0.0093</td><td class="num">$0.0019</td><td><span class="badge claude">Claude</span></td></tr>
+<tr><td class="num">3</td><td>Write MCP server</td><td class="num">9.60</td><td class="num">9.75</td><td class="num">$0.05</td><td class="num">$0.02</td><td><span class="badge codex">Codex</span></td></tr>
+<tr><td class="num">4</td><td>Refactor TS module</td><td class="num">9.45</td><td class="num">6.40</td><td class="num">$0.13</td><td class="num">$0.04</td><td><span class="badge claude">Claude</span></td></tr>
+<tr><td class="num">5</td><td>E2E agent</td><td class="num">9.60</td><td class="num">8.60</td><td class="num">$0.07</td><td class="num">$0.02</td><td><span class="badge claude">Claude</span></td></tr>
+</tbody></table>
+<h2>Per-task detail</h2>
+<div class="task"><header><h3>Task 1 — Build HN scraper</h3><span class="badge claude">Claude wins</span></header>
+<table><thead><tr><th>Model</th><th class="num">Correctness</th><th class="num">Code quality</th><th class="num">Edge cases</th><th class="num">Quality</th><th class="num">Cost</th><th class="num">Time</th><th>Tokens (in/out)</th></tr></thead><tbody>
+<tr><td><b class="claude">Claude</b></td><td class="num">9</td><td class="num">8</td><td class="num">9</td><td class="num">8.75</td><td class="num">$0.04</td><td class="num">None</td><td>238 / 1407</td></tr>
+<tr><td><b class="codex">Codex</b></td><td class="num">9</td><td class="num">8</td><td class="num">8</td><td class="num">8.60</td><td class="num">$0.0057</td><td class="num">None</td><td>176 / 546</td></tr>
+</tbody></table>
+<div class="notes"><b class="claude">Claude:</b> Ran cleanly, returned 30 valid items, 0 nulls. Extracts age as ISO timestamp via the title attribute on .age (more parseable downstream than Codex&#x27;s &#x27;3 hours ago&#x27; string). Adds an is_ask_hn flag and falls back URL to the HN discussion page — useful but slightly beyond spec.</div>
+<div class="notes"><b class="codex">Codex:</b> Cleaner, more idiomatic Playwright (uses page.$$eval, no helper functions). 30 valid items, 0 nulls when run. Returns url:null for Ask HN per spec — more literal interpretation. Did not install playwright itself (&#x27;would add files outside the approved single-file slice&#x27;) so did not self-verify; verified externally.</div>
+</div>
+<div class="task"><header><h3>Task 2 — Debug flaky test</h3><span class="badge claude">Claude wins</span></header>
+<table><thead><tr><th>Model</th><th class="num">Correctness</th><th class="num">Code quality</th><th class="num">Edge cases</th><th class="num">Quality</th><th class="num">Cost</th><th class="num">Time</th><th>Tokens (in/out)</th></tr></thead><tbody>
+<tr><td><b class="claude">Claude</b></td><td class="num">10</td><td class="num">9</td><td class="num">9</td><td class="num">9.60</td><td class="num">$0.0093</td><td class="num">None</td><td>344 / 305</td></tr>
+<tr><td><b class="codex">Codex</b></td><td class="num">4</td><td class="num">7</td><td class="num">6</td><td class="num">5.05</td><td class="num">$0.0019</td><td class="num">None</td><td>255 / 157</td></tr>
+</tbody></table>
+<div class="notes"><b class="claude">Claude:</b> Correct diagnosis of the .all() snapshot vs auto-retry race. Fix uses real Playwright matchers (toBeVisible + not.toHaveCount(0) + toContainText) — all of which exist and auto-retry. Slightly redundant assertions but safe.</div>
+<div class="notes"><b class="codex">Codex:</b> Diagnosis is correct (race after click). But the fix calls await expect(results).toHaveCountGreaterThan(0) — that matcher does NOT exist in @playwright/test. Confirmed by grepping the installed types: only toHaveCount(n) exists. The fix would throw &#x27;toHaveCountGreaterThan is not a function&#x27; at runtime. Hallucinated API.</div>
+</div>
+<div class="task"><header><h3>Task 3 — Write MCP server</h3><span class="badge codex">Codex wins</span></header>
+<table><thead><tr><th>Model</th><th class="num">Correctness</th><th class="num">Code quality</th><th class="num">Edge cases</th><th class="num">Quality</th><th class="num">Cost</th><th class="num">Time</th><th>Tokens (in/out)</th></tr></thead><tbody>
+<tr><td><b class="claude">Claude</b></td><td class="num">10</td><td class="num">9</td><td class="num">9</td><td class="num">9.60</td><td class="num">$0.05</td><td class="num">None</td><td>279 / 2121</td></tr>
+<tr><td><b class="codex">Codex</b></td><td class="num">10</td><td class="num">9</td><td class="num">10</td><td class="num">9.75</td><td class="num">$0.02</td><td class="num">None</td><td>207 / 1919</td></tr>
+</tbody></table>
+<div class="notes"><b class="claude">Claude:</b> tsc --noEmit clean. stdio handshake works: initialize + tools/list both return correct payloads. All 3 tools register with zod input schemas. HnError class covers HTTP and 404. URL falls back to the HN discussion page for Ask HN / no-link items.</div>
+<div class="notes"><b class="codex">Codex:</b> tsc --noEmit clean. Same stdio handshake passes. Slightly more thorough: separates network/HTTP/JSON-parse failure modes in fetchJson, has fuller HnItem type (covers all fields including parts/dead/deleted/parent), distinguishes HnItemType union. 230 LOC vs Claude&#x27;s ~140 — longer but better-typed.</div>
+</div>
+<div class="task"><header><h3>Task 4 — Refactor TS module</h3><span class="badge claude">Claude wins</span></header>
+<table><thead><tr><th>Model</th><th class="num">Correctness</th><th class="num">Code quality</th><th class="num">Edge cases</th><th class="num">Quality</th><th class="num">Cost</th><th class="num">Time</th><th>Tokens (in/out)</th></tr></thead><tbody>
+<tr><td><b class="claude">Claude</b></td><td class="num">10</td><td class="num">9</td><td class="num">8</td><td class="num">9.45</td><td class="num">$0.13</td><td class="num">None</td><td>3355 / 4454</td></tr>
+<tr><td><b class="codex">Codex</b></td><td class="num">6</td><td class="num">7</td><td class="num">7</td><td class="num">6.40</td><td class="num">$0.04</td><td class="num">None</td><td>2485 / 3226</td></tr>
+</tbody></table>
+<div class="notes"><b class="claude">Claude:</b> tsc --noEmit clean (exit 0). Behavior preserved file-by-file. 11 files, all &lt;70 LOC, modular layout matches spec (routes/services/middleware/db/types). Includes package.json + tsconfig.json. JwtPayload cast uses &#x27;as unknown as JwtPayload&#x27; to satisfy strict mode.</div>
+<div class="notes"><b class="codex">Codex:</b> More granular split (15 files — db queries in db/users.ts + db/projects.ts, routes/me.ts as its own router, types split 3 ways). However: omits package.json + tsconfig.json, and tsc fails with 4 strict-mode errors (3 unsafe casts to AuthenticatedRequest in routes/projects.ts, 1 in services/authService.ts). Code would not compile under the same strict tsconfig Claude used. Verification log in _verification/typecheck.log.</div>
+</div>
+<div class="task"><header><h3>Task 5 — E2E agent</h3><span class="badge claude">Claude wins</span></header>
+<table><thead><tr><th>Model</th><th class="num">Correctness</th><th class="num">Code quality</th><th class="num">Edge cases</th><th class="num">Quality</th><th class="num">Cost</th><th class="num">Time</th><th>Tokens (in/out)</th></tr></thead><tbody>
+<tr><td><b class="claude">Claude</b></td><td class="num">10</td><td class="num">9</td><td class="num">9</td><td class="num">9.60</td><td class="num">$0.07</td><td class="num">None</td><td>331 / 2634</td></tr>
+<tr><td><b class="codex">Codex</b></td><td class="num">9</td><td class="num">8</td><td class="num">8</td><td class="num">8.60</td><td class="num">$0.02</td><td class="num">None</td><td>245 / 1621</td></tr>
+</tbody></table>
+<div class="notes"><b class="claude">Claude:</b> tsc --noEmit clean. Bogus-key smoke test: agent caught every per-article OpenAI 401, produced valid markdown with a Skipped section. Suppresses jsdom CSS parser warnings via VirtualConsole. Has FETCH_TIMEOUT_MS, MAX_ARTICLE_CHARS cap, content-type guard.</div>
+<div class="notes"><b class="codex">Codex:</b> tsc --noEmit clean. Stdout discipline is correct (markdown only) — initial fear of pollution was the mixed 2&gt;&amp;1 in my smoke test. The 344KB of jsdom CSS noise is on stderr, not stdout, so redirecting stdout to a file gives a clean digest. Has AbortController + ARTICLE_TIMEOUT_MS. Does NOT suppress jsdom warnings (messy stderr in production) — Claude does.</div>
+</div>
+<h2>Pricing assumptions</h2>
+<p>Token counts come from <code>tools/count_tokens.py</code>. Costs use the per-million-token rates set at the top of that file. Verify against the current published rates:</p>
+<ul><li><a href="https://www.anthropic.com/pricing">anthropic.com/pricing</a></li><li><a href="https://openai.com/api/pricing">openai.com/api/pricing</a></li></ul>
+<h2>Reproduce</h2>
+<pre># Paste the same prompts into Claude and Codex; save outputs under outputs/{claude,codex}/
+python tools/count_tokens.py prompts/task-01-scraper.md outputs/claude/task-01-scraper/scraper.js claude-opus-4-7
+python chart.py
+python tools/render_report.py</pre>
 <footer>
   Generated by <code>tools/render_report.py</code> from <code>results.json</code>.
   Recompute by editing pricing constants in <code>tools/count_tokens.py</code> and re-running the renderer.

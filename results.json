@@ -9,7 +9,123 @@
       "correctness_weight": 0.6,
       "code_quality_weight": 0.25,
       "edge_cases_weight": 0.15
-    }
+    },
+    "pricing": {
+      "claude-opus-4-7": {"input_per_mtok_usd": 5.00, "output_per_mtok_usd": 25.00, "source": "https://platform.claude.com/docs/en/about-claude/pricing"},
+      "gpt-5.5":         {"input_per_mtok_usd": 1.25, "output_per_mtok_usd": 10.00, "source": "TODO: verify against https://openai.com/api/pricing (placeholder is GPT-5 family rate)"}
+    },
+    "tokenizer_notes": "Token counts use OpenAI's o200k_base as an offline proxy for both models. Claude counts include a 1.35x correction per Anthropic's docs on the Opus 4.7 tokenizer. Counts reflect input prompts and final code artifacts only — they do NOT include reasoning tokens, tool-call overhead, or multi-pass refinement, so absolute costs are a lower bound. Relative comparison between models is preserved."
   },
-  "tasks": []
+  "tasks": [
+    {
+      "id": 1,
+      "name": "Build HN scraper",
+      "claude": {
+        "correctness": 9,
+        "code_quality": 8,
+        "edge_cases": 9,
+        "cost_usd": 0.0364,
+        "time_min": null,
+        "tokens": {"input_tokens": 238, "output_tokens": 1407},
+        "notes": "Ran cleanly, returned 30 valid items, 0 nulls. Extracts age as ISO timestamp via the title attribute on .age (more parseable downstream than Codex's '3 hours ago' string). Adds an is_ask_hn flag and falls back URL to the HN discussion page — useful but slightly beyond spec."
+      },
+      "codex": {
+        "correctness": 9,
+        "code_quality": 8,
+        "edge_cases": 8,
+        "cost_usd": 0.0057,
+        "time_min": null,
+        "tokens": {"input_tokens": 176, "output_tokens": 546},
+        "notes": "Cleaner, more idiomatic Playwright (uses page.$$eval, no helper functions). 30 valid items, 0 nulls when run. Returns url:null for Ask HN per spec — more literal interpretation. Did not install playwright itself ('would add files outside the approved single-file slice') so did not self-verify; verified externally."
+      }
+    },
+    {
+      "id": 2,
+      "name": "Debug flaky test",
+      "claude": {
+        "correctness": 10,
+        "code_quality": 9,
+        "edge_cases": 9,
+        "cost_usd": 0.0093,
+        "time_min": null,
+        "tokens": {"input_tokens": 344, "output_tokens": 305},
+        "notes": "Correct diagnosis of the .all() snapshot vs auto-retry race. Fix uses real Playwright matchers (toBeVisible + not.toHaveCount(0) + toContainText) — all of which exist and auto-retry. Slightly redundant assertions but safe."
+      },
+      "codex": {
+        "correctness": 4,
+        "code_quality": 7,
+        "edge_cases": 6,
+        "cost_usd": 0.0019,
+        "time_min": null,
+        "tokens": {"input_tokens": 255, "output_tokens": 157},
+        "notes": "Diagnosis is correct (race after click). But the fix calls await expect(results).toHaveCountGreaterThan(0) — that matcher does NOT exist in @playwright/test. Confirmed by grepping the installed types: only toHaveCount(n) exists. The fix would throw 'toHaveCountGreaterThan is not a function' at runtime. Hallucinated API."
+      }
+    },
+    {
+      "id": 3,
+      "name": "Write MCP server",
+      "claude": {
+        "correctness": 10,
+        "code_quality": 9,
+        "edge_cases": 9,
+        "cost_usd": 0.0544,
+        "time_min": null,
+        "tokens": {"input_tokens": 279, "output_tokens": 2121},
+        "notes": "tsc --noEmit clean. stdio handshake works: initialize + tools/list both return correct payloads. All 3 tools register with zod input schemas. HnError class covers HTTP and 404. URL falls back to the HN discussion page for Ask HN / no-link items."
+      },
+      "codex": {
+        "correctness": 10,
+        "code_quality": 9,
+        "edge_cases": 10,
+        "cost_usd": 0.0194,
+        "time_min": null,
+        "tokens": {"input_tokens": 207, "output_tokens": 1919},
+        "notes": "tsc --noEmit clean. Same stdio handshake passes. Slightly more thorough: separates network/HTTP/JSON-parse failure modes in fetchJson, has fuller HnItem type (covers all fields including parts/dead/deleted/parent), distinguishes HnItemType union. 230 LOC vs Claude's ~140 — longer but better-typed."
+      }
+    },
+    {
+      "id": 4,
+      "name": "Refactor TS module",
+      "claude": {
+        "correctness": 10,
+        "code_quality": 9,
+        "edge_cases": 8,
+        "cost_usd": 0.1281,
+        "time_min": null,
+        "tokens": {"input_tokens": 3355, "output_tokens": 4454},
+        "notes": "tsc --noEmit clean (exit 0). Behavior preserved file-by-file. 11 files, all <70 LOC, modular layout matches spec (routes/services/middleware/db/types). Includes package.json + tsconfig.json. JwtPayload cast uses 'as unknown as JwtPayload' to satisfy strict mode."
+      },
+      "codex": {
+        "correctness": 6,
+        "code_quality": 7,
+        "edge_cases": 7,
+        "cost_usd": 0.0354,
+        "time_min": null,
+        "tokens": {"input_tokens": 2485, "output_tokens": 3226},
+        "notes": "More granular split (15 files — db queries in db/users.ts + db/projects.ts, routes/me.ts as its own router, types split 3 ways). However: omits package.json + tsconfig.json, and tsc fails with 4 strict-mode errors (3 unsafe casts to AuthenticatedRequest in routes/projects.ts, 1 in services/authService.ts). Code would not compile under the same strict tsconfig Claude used. Verification log in _verification/typecheck.log."
+      }
+    },
+    {
+      "id": 5,
+      "name": "E2E agent",
+      "claude": {
+        "correctness": 10,
+        "code_quality": 9,
+        "edge_cases": 9,
+        "cost_usd": 0.0675,
+        "time_min": null,
+        "tokens": {"input_tokens": 331, "output_tokens": 2634},
+        "notes": "tsc --noEmit clean. Bogus-key smoke test: agent caught every per-article OpenAI 401, produced valid markdown with a Skipped section. Suppresses jsdom CSS parser warnings via VirtualConsole. Has FETCH_TIMEOUT_MS, MAX_ARTICLE_CHARS cap, content-type guard."
+      },
+      "codex": {
+        "correctness": 9,
+        "code_quality": 8,
+        "edge_cases": 8,
+        "cost_usd": 0.0165,
+        "time_min": null,
+        "tokens": {"input_tokens": 245, "output_tokens": 1621},
+        "notes": "tsc --noEmit clean. Stdout discipline is correct (markdown only) — initial fear of pollution was the mixed 2>&1 in my smoke test. The 344KB of jsdom CSS noise is on stderr, not stdout, so redirecting stdout to a file gives a clean digest. Has AbortController + ARTICLE_TIMEOUT_MS. Does NOT suppress jsdom warnings (messy stderr in production) — Claude does."
+      }
+    }
+  ]
 }

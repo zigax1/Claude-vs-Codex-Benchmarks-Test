@@ -113,18 +113,21 @@ def main() -> None:
     else:
         panel.text(0, 0.60, "Costs were within 1%", color=TEXT, fontsize=13, fontweight="bold")
 
+    def fmt_wins(names: list[str]) -> str:
+        return "\n".join(n.lower() for n in names)
+
     panel.text(0, 0.46, "WINS  (quality)", color=DIM, fontsize=11, fontweight="bold")
     panel.text(0, 0.36, f"{len(claude_wins)}", color=CLAUDE_COLOR, fontsize=36, fontweight="bold")
     panel.text(0.13, 0.39, "Claude", color=TEXT, fontsize=13, fontweight="bold")
     if claude_wins:
-        panel.text(0.13, 0.34, " · ".join(claude_wins).lower(), color=DIM, fontsize=10)
-    panel.text(0, 0.22, f"{len(codex_wins)}", color=CODEX_COLOR, fontsize=36, fontweight="bold")
-    panel.text(0.13, 0.25, "Codex", color=TEXT, fontsize=13, fontweight="bold")
+        panel.text(0.13, 0.34, fmt_wins(claude_wins), color=DIM, fontsize=9.5, va="top")
+    panel.text(0, 0.18, f"{len(codex_wins)}", color=CODEX_COLOR, fontsize=36, fontweight="bold")
+    panel.text(0.13, 0.21, "Codex", color=TEXT, fontsize=13, fontweight="bold")
     if codex_wins:
-        panel.text(0.13, 0.20, " · ".join(codex_wins).lower(), color=DIM, fontsize=10)
+        panel.text(0.13, 0.16, fmt_wins(codex_wins), color=DIM, fontsize=9.5, va="top")
     if ties:
-        panel.text(0, 0.10, f"Ties: {len(ties)}", color=DIM, fontsize=11)
-        panel.text(0.13, 0.10, " · ".join(ties).lower(), color=DIM, fontsize=10)
+        panel.text(0, 0.04, f"Ties: {len(ties)}", color=DIM, fontsize=11)
+        panel.text(0.13, 0.04, " · ".join(ties).lower(), color=DIM, fontsize=10)
 
     fig.text(
         0.05, 0.045,
@@ -132,7 +135,7 @@ def main() -> None:
         "Quality score = correctness (60%) + code quality (25%) + edge case handling (15%).",
         color=DIM, fontsize=10, style="italic",
     )
-    fig.text(0.05, 0.018, "Raw results & repo → github.com/ZigaSetar/claude-vs-codex-benchmark",
+    fig.text(0.05, 0.018, "Raw results & repo → github.com/zigax1/Claude-vs-Codex-Benchmarks-Test",
              color=CLAUDE_COLOR, fontsize=10)
 
     fig.savefig(OUT_PATH, dpi=120)
