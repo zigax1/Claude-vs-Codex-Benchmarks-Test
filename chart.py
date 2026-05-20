@@ -98,7 +98,7 @@ def main() -> None:
              color=TEXT, fontsize=24, fontweight="bold")
     fig.text(
         0.05, 0.89,
-        f"{len(tasks)} real tasks · {data['meta']['runs_per_task']} run(s) each · same prompts · {data['meta']['date'][:7]}",
+        f"{len(tasks)} modern agentic-dev tasks · {data['meta']['runs_per_task']} run(s) each · same prompts · {data['meta']['date'][:7]}",
         color=DIM, fontsize=12,
     )
 

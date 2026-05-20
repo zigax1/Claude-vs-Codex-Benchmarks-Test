@@ -49,29 +49,38 @@ def render_markdown(data: dict) -> str:
     cheaper_label = "Codex" if codex_total < claude_total else "Claude"
     pct = (expensive - cheaper) / expensive * 100 if expensive > 0 else 0
 
+    cheaper_pct_int = round(pct)
     lines = []
-    lines.append(f"# Results — {meta['claude_model']} vs {meta['codex_model']}")
+    lines.append(f"# Results")
     lines.append("")
-    lines.append(f"_Run on {meta['date']} by {meta['runner']}. {len(tasks)} tasks, {meta['runs_per_task']} run(s) per model._")
+    lines.append(f"> **{meta['claude_model']}** vs **{meta['codex_model']}** — {len(tasks)} modern agentic-dev tasks, {meta['runs_per_task']} run per model, same prompts both sides.")
+    lines.append(f"> Run {meta['date']} by {meta['runner']}.")
     lines.append("")
     lines.append("![Chart](chart.png)")
     lines.append("")
     lines.append("## Headline")
     lines.append("")
-    lines.append(f"- **Quality wins:** Claude {claude_wins} · Codex {codex_wins}" + (f" · Ties {ties}" if ties else ""))
-    lines.append(f"- **Total cost:** Claude **{fmt_money(claude_total)}** · Codex **{fmt_money(codex_total)}** ({cheaper_label} was {pct:.0f}% cheaper)")
+    lines.append("| | Claude Opus 4.7 | Codex (GPT-5.5) |")
+    lines.append("|---|:---:|:---:|")
+    lines.append(f"| **Quality wins** | **{claude_wins}** / {len(tasks)} | {codex_wins} / {len(tasks)}" + (f" ({ties} tie)" if ties else "") + " |")
+    lines.append(f"| **Total cost** | {fmt_money(claude_total)} | **{fmt_money(codex_total)}** |")
+    claude_won_names = ", ".join(t["name"] for t in tasks if winner(t) == "claude") or "—"
+    codex_won_names  = ", ".join(t["name"] for t in tasks if winner(t) == "codex")  or "—"
+    lines.append(f"| **Tasks won** | {claude_won_names} | {codex_won_names} |")
     lines.append("")
-    lines.append("## Per-task scores")
+    lines.append(f"_{cheaper_label} was **{cheaper_pct_int}% cheaper** on these deliverables._")
     lines.append("")
-    lines.append("| # | Task | Claude quality | Codex quality | Claude cost | Codex cost | Winner |")
-    lines.append("|---|------|---------------:|--------------:|------------:|-----------:|:------:|")
+    lines.append("## Per-task scoreboard")
+    lines.append("")
+    lines.append("| # | Task | Claude | Codex | Winner | Claude $ | Codex $ |")
+    lines.append("|:-:|------|:------:|:-----:|:------:|---------:|--------:|")
     for t in tasks:
         cq = quality(t["claude"])
         gq = quality(t["codex"])
         w = winner(t)
-        w_str = {"claude": "Claude", "codex": "Codex", "tie": "Tie"}[w]
+        w_emoji = {"claude": "Claude", "codex": "Codex", "tie": "Tie"}[w]
         lines.append(
-            f"| {t['id']} | {t['name']} | {cq:.2f} | {gq:.2f} | {fmt_money(t['claude']['cost_usd'])} | {fmt_money(t['codex']['cost_usd'])} | {w_str} |"
+            f"| {t['id']} | {t['name']} | {cq:.2f} | {gq:.2f} | **{w_emoji}** | {fmt_money(t['claude']['cost_usd'])} | {fmt_money(t['codex']['cost_usd'])} |"
         )
     lines.append("")
     lines.append("## Per-task detail")
@@ -81,42 +90,37 @@ def render_markdown(data: dict) -> str:
         gq = quality(t["codex"])
         w = winner(t)
         w_str = {"claude": "Claude wins", "codex": "Codex wins", "tie": "Tie"}[w]
-        lines.append(f"### Task {t['id']} — {t['name']}")
-        lines.append(f"_{w_str}_")
+        lines.append(f"### Task {t['id']} — {t['name']}  ·  _{w_str}_")
         lines.append("")
-        lines.append("| Model | Correctness (60%) | Code quality (25%) | Edge cases (15%) | Quality | Cost | Time (min) | Tokens (in/out) |")
-        lines.append("|------|------------------:|-------------------:|-----------------:|--------:|-----:|-----------:|:----------------|")
+        lines.append("| Model | Correctness · 60% | Code quality · 25% | Edge cases · 15% | **Quality** | Cost | Tokens (in / out) |")
+        lines.append("|-------|:-----------------:|:------------------:|:----------------:|:-----------:|-----:|:-----------------:|")
         for label, side in (("Claude", t["claude"]), ("Codex", t["codex"])):
             tok = side.get("tokens", {})
             tok_str = f"{tok.get('input_tokens', '?')} / {tok.get('output_tokens', '?')}" if tok else "—"
             lines.append(
-                f"| {label} | {side['correctness']} | {side['code_quality']} | {side['edge_cases']} | "
-                f"{quality(side):.2f} | {fmt_money(side['cost_usd'])} | {side.get('time_min', '—')} | {tok_str} |"
+                f"| **{label}** | {side['correctness']} | {side['code_quality']} | {side['edge_cases']} | "
+                f"**{quality(side):.2f}** | {fmt_money(side['cost_usd'])} | {tok_str} |"
             )
         lines.append("")
         if t["claude"].get("notes"):
-            lines.append(f"**Claude:** {t['claude']['notes']}")
+            lines.append(f"> **Claude — observations.** {t['claude']['notes']}")
             lines.append("")
         if t["codex"].get("notes"):
-            lines.append(f"**Codex:** {t['codex']['notes']}")
+            lines.append(f"> **Codex — observations.** {t['codex']['notes']}")
             lines.append("")
 
     lines.append("## Pricing assumptions")
     lines.append("")
-    lines.append("Token counts come from `tools/count_tokens.py` (see source). Costs use the per-million-token rates encoded at the top of that file. Verify against:")
+    lines.append("- **Claude Opus 4.7:** $5 input / $25 output per MTok — verified against <https://platform.claude.com/docs/en/about-claude/pricing>.")
+    lines.append("- **GPT-5.5:** $1.25 input / $10 output per MTok — placeholder using the GPT-5 family rate (OpenAI pricing page blocks automated fetch). Verify against your Codex dashboard.")
     lines.append("")
-    lines.append("- Anthropic: <https://www.anthropic.com/pricing>")
-    lines.append("- OpenAI: <https://openai.com/api/pricing>")
-    lines.append("")
-    lines.append("If pricing has changed since this report was generated, recompute by editing the constants and re-running `python tools/render_report.py`.")
+    lines.append("Token counts use `tiktoken` (`o200k_base`) for both models, with a 1.35× correction on Claude per Anthropic's documented Opus 4.7 tokenizer drift. Costs reflect input prompts + final code artifacts only — NOT reasoning tokens or tool-call overhead.")
     lines.append("")
     lines.append("## Reproduce")
     lines.append("")
     lines.append("```bash")
-    lines.append("# Paste the same prompts into Claude and Codex; save outputs under outputs/{claude,codex}/")
-    lines.append("python tools/count_tokens.py prompts/task-01-scraper.md outputs/claude/task-01-scraper/scraper.js claude-opus-4-7")
-    lines.append("python chart.py")
-    lines.append("python tools/render_report.py")
+    lines.append("# After editing results.json or pricing constants in tools/count_tokens.py:")
+    lines.append("python tools/build_report.py    # validates, regenerates chart.png + RESULTS.md + RESULTS.html")
     lines.append("```")
     lines.append("")
     return "\n".join(lines)
@@ -223,7 +227,7 @@ def render_html(data: dict) -> str:
     tasks = data["tasks"]
     meta = data["meta"]
     title = f"{meta['claude_model']} vs {meta['codex_model']}"
-    subtitle = f"{len(tasks)} tasks · {meta['runs_per_task']} run(s) each · same prompts · {meta['date']} · {meta['runner']}"
+    subtitle = f"{len(tasks)} modern agentic-dev tasks · {meta['runs_per_task']} run(s) each · same prompts · {meta['date']} · {meta['runner']}"
 
     if not tasks:
         body = '<div class="empty">No tasks scored yet. Once Codex outputs are in and graded, <code>results.json</code> will populate and this page will render.</div>'
